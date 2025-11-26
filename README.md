@@ -18,58 +18,59 @@ We provide all scripts required to reproduce our analyses. Due to large file siz
 ## Data Processing Pipeline
 ### 1. Code relevance score and create final query-level dataset
 - Get all unique URLs (results) and some metadata for each search query. These query-URl pairs are sampled for handcoding.
-  File: `get_unique_results.py`
+  <br>File: `get_unique_results.py`
   
 - Create the final search query level data set. Add a column with relevance score, and a column (`house_analysis_include`) that dummy codes whether the member is included as a search query. Members representing the 5 territories (American Samoa, Guam, Puerto Rico, Northern Mariana Islands, and the Virgin Islands), who have a relevence score less than 3, or were no longer in office by 9/1/2020 are excluded.
-    File: `create_final_qry_info.r`  
+  <br>File: `create_final_qry_info.r`  
 
 ### 2. Parsing and Summarising Search Results
 - Remove NA URLs and excluded component types. 
-  File: `drop_na_add_domain` folder containing Snakefile
+  <br>File: `drop_na_add_domain` folder containing Snakefile
   
 - Group cleaned data from `drop_na_add_domain` into different levels and save. Makes subsequent analyses more efficient. 
-  File: `generate_analysis_summary` folder containing Snakefile
+  <br>File: `generate_analysis_summary` folder containing Snakefile
 
 - Repeat with an alternative parsing method that counts grouped links as one result (explored in SI section B).
-  File: `si_preprocess` folder containing sub-level `drop_na_add_domain_si` and `generate_analysis_summary_si` folders
+  <br>File: `si_preprocess` folder containing sub-level `drop_na_add_domain_si` and `generate_analysis_summary_si` folders
 
-* Note: call `snakemake` from within the folder to run the Snakefiles *
+_Note: call `snakemake` from within the folder to run the Snakefiles_
 
 ### 3. Domain-level classification
 - Categorize domains into six main types, Campaign/Personal, Education, Government, News, Other Third Party, or Social Media by matching to external data or using keyword classification
-  File: `label_domains.r`
+  <br>File: `label_domains.r`
 
 - Pull all unique search query-URL pairs for all social media domains and house.gov for handcoding as politician controlled.
-  File: `prepare_poli_control_code.r`
+  <br>File: `prepare_poli_control_code.r`
 
 - Merge all domain level classifications (six types, politican-controlled, partisan audience score, local or national news, reliable or unreliable news) into one dataset at the search query-domain-rank level. Create coverate rates table (SI Table S3).
-  File: `post_process_domains.r`
+  <br>File: `post_process_domains.r`
 
-### 4. Analyses for variation by search result location  
+### 4. Analysis for variation by search result location  
 - Sample location pairs
-  File: `get_rbo_sim_sample.r`
+  <br>File: `get_rbo_sim_sample.r`
   
 - Pull URLs from data generated in Step 2 and compute rank-biased overlap for each pair.
-    File: `get_rbo_sim.py`
+    <br>File: `get_rbo_sim.py`
 
 - Calculate jaccard index and additional metadata for each pair.
-    File: `postprocess_rbo_sim.py`
+    <br>File: `postprocess_rbo_sim.py`
 
 ### 5. Figures and Tables 
 - Figure 2 and SI Table S2 (Concentration, Compostion, and Ranking)
-  File: `plots_fig2.r`
+  <br>File: `plots_fig2.r`
 
 - Figure 3 (Distribution of search results by politician control, local or national news, or unreliable or reliable news)
-  File: `plots_fig3.r`
+  <br>File: `plots_fig3.r`
 
 - Figure 4 (Partisan differences in search results)
-  File: `plots_fig4.r`
+  <br>File: `plots_fig4.r`
 
 - Figure 5 and SI Figure S6 (Variation by locatioin)
-    File: `plots_rbo.r`
+    <br>File: `plots_rbo.r`
 
 - SI Figure S1 and calculations for SI Section B (Comparison to Alternative Methods for Parsing Search Results)
+<br>File: `plots_si_cmpt_rank.r`
 
 - SI Figures S2 to S5, SI Tables S4 to S6 (Variation over time and by search query)
-    File: `plots_si.r`
+    <br>File: `plots_si.r`
   
